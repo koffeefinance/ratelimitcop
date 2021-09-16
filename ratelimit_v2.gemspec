@@ -1,8 +1,8 @@
-require_relative 'lib/ratelimit/v2/version'
+require_relative 'lib/ratelimit_v2/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "ratelimit-v2"
-  spec.version       = Ratelimit::V2::VERSION
+  spec.name          = "ratelimit_v2"
+  spec.version       = RatelimitV2::VERSION
   spec.authors       = ["Mathusan Selvarajah"]
   spec.email         = ["mathusans52@gmail.com"]
 

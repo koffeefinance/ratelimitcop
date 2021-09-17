@@ -1,5 +1,7 @@
 # Ratelimitcop
 
+[![Gem Version](https://badge.fury.io/rb/ratelimitcop.svg)](https://badge.fury.io/rb/ratelimitcop)
+
 Ratelimitcop is a redis backed rate limiter. Appropriate for use cases where in-memory rate limiting would not work (i.e rate limiting across multiple processes, servers, apps, etc).
 
 ## Installation

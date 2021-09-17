@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['mathusans52@gmail.com']
 
   spec.summary       = 'A redis backed rate limiter.'
-  spec.description   = 'A redis backed rate limiter. Appropriate for use cases where in-memory rate limiting \
+  spec.description   = 'A redis backed rate limiter. Appropriate for use cases where in-memory rate limiting
                           would not work (i.e rate limiting across multiple processes, servers, apps, etc).'
   spec.homepage      = 'https://github.com/koffeefinance/ratelimitcop'
   spec.license       = 'MIT'

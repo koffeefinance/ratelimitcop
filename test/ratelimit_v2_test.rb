@@ -10,7 +10,7 @@ class RatelimitV2Test < Minitest::Test
       time_span: 600
     )
 
-    # Will connect to the fakeredis that the limiter is connected to
+    # will connect to the fakeredis that the limiter is connected to
     @redis = Redis.new
     @redis.flushdb
   end
@@ -65,7 +65,7 @@ class RatelimitV2Test < Minitest::Test
     assert @limiter.exceeded?
   end
 
-  # note: this is sort of an integration test rather than a unit test
+  # NOTE: this is sort of an integration test rather than a unit test
   def test_exec_within_threshold_waits_when_threshold_hit
     limiter = RatelimitV2.new(
       name: 'test',

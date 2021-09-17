@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ratelimit_v2 (0.1.0)
+    ratelimit_v2 (1.0.0)
       redis (~> 4.4)
       redis-namespace (~> 1.8.1)
 

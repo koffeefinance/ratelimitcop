@@ -1,3 +1,3 @@
-module RatelimitV2
-  VERSION = "0.1.0"
+class RatelimitV2
+  VERSION = '1.0.0'.freeze
 end

@@ -3,7 +3,7 @@ require 'redis'
 
 class RatelimitV2Test < Minitest::Test
   def setup
-    @limiter = RatelimitV2::Limiter.new(
+    @limiter = RatelimitV2.new(
       name: 'test',
       threshold: 10,
       interval: 5,
@@ -21,7 +21,7 @@ class RatelimitV2Test < Minitest::Test
 
   def test_argument_error_raised_if_interval_greater_than_time_span
     assert_raises ArgumentError do
-      ::RatelimitV2::Limiter.new(
+      RatelimitV2.new(
         name: 'test',
         threshold: 10,
         interval: 800,
@@ -67,7 +67,7 @@ class RatelimitV2Test < Minitest::Test
 
   # note: this is sort of an integration test rather than a unit test
   def test_exec_within_threshold_waits_when_threshold_hit
-    limiter = RatelimitV2::Limiter.new(
+    limiter = RatelimitV2.new(
       name: 'test',
       threshold: 10,
       interval: 4,

@@ -1,9 +1,9 @@
 require 'test_helper'
 require 'redis'
 
-class RatelimiterTest < Minitest::Test
+class RatelimitcopTest < Minitest::Test
   def setup
-    @limiter = Ratelimiter.new(
+    @limiter = Ratelimitcop.new(
       name: 'test',
       threshold: 10,
       interval: 5,
@@ -16,12 +16,12 @@ class RatelimiterTest < Minitest::Test
   end
 
   def test_that_it_has_a_version_number
-    refute_nil ::Ratelimiter::VERSION
+    refute_nil ::Ratelimitcop::VERSION
   end
 
   def test_argument_error_raised_if_interval_greater_than_time_span
     assert_raises ArgumentError do
-      Ratelimiter.new(
+      Ratelimitcop.new(
         name: 'test',
         threshold: 10,
         interval: 800,
@@ -67,7 +67,7 @@ class RatelimiterTest < Minitest::Test
 
   # NOTE: this is sort of an integration test rather than a unit test
   def test_exec_within_threshold_waits_when_threshold_hit
-    limiter = Ratelimiter.new(
+    limiter = Ratelimitcop.new(
       name: 'test',
       threshold: 10,
       interval: 4,

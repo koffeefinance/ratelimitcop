@@ -1,13 +1,13 @@
-# Ratelimiter
+# Ratelimitcop
 
-Ratelimiter is a redis backed rate limiter. Appropriate for use cases where in-memory rate limiting would not work (i.e rate limiting across multiple processes, servers, apps, etc).
+Ratelimitcop is a redis backed rate limiter. Appropriate for use cases where in-memory rate limiting would not work (i.e rate limiting across multiple processes, servers, apps, etc).
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'ratelimiter'
+gem 'ratelimitcop'
 ```
 
 And then execute:
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install ratelimiter
+    $ gem install ratelimitcop
 
 ## Usage
 
@@ -30,7 +30,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/koffeefinance/ratelimiter. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/koffeefinance/ratelimiter/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/koffeefinance/ratelimitcop. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/koffeefinance/ratelimitcop/blob/master/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -38,4 +38,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Ratelimiter project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/koffeefinance/ratelimiter/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Ratelimitcop project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/koffeefinance/ratelimitcop/blob/master/CODE_OF_CONDUCT.md).

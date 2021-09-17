@@ -1,3 +1,3 @@
-class RatelimitV2
+class Ratelimiter
   VERSION = '1.0.0'.freeze
 end

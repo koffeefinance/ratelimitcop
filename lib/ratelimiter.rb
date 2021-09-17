@@ -1,8 +1,8 @@
-require 'ratelimit_v2/version'
+require 'ratelimiter/version'
 require 'redis'
 require 'redis-namespace'
 
-class RatelimitV2
+class Ratelimiter
   attr_reader :name, :threshold, :interval, :time_span, :bucket_span
 
   def initialize(name:, threshold:, interval:, redis_connection: {}, time_span: 600, bucket_span: 5)

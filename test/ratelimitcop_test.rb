@@ -110,8 +110,7 @@ class RatelimitcopTest < Minitest::Test
     assert @limiter.exceeded?
   end
 
-  # NOTE: this is sort of an integration test rather than a unit test
-  def test_exec_within_threshold_waits_when_threshold_hit
+  def test_exec_within_threshold_sleeps_when_threshold_is_hit
     limiter = Ratelimitcop.new(
       name: 'test',
       threshold: 10,
@@ -121,34 +120,15 @@ class RatelimitcopTest < Minitest::Test
     count = 0
 
     # verifies sleep is actually called
+    12.times { limiter.add }
+
     assert_raises Timeout::Error do
       Timeout.timeout(3) do
-        12.times do
-          limiter.add
-          limiter.exec_within_threshold do
-            count += 1
-          end
+        limiter.exec_within_threshold do
+          count += 1
         end
       end
     end
-
-    count = 0
-
-    # fast forward 15 seconds where rate limits should be cleared
-    Timecop.travel(15) do
-      assert !limiter.exceeded?
-      # since rate limit is 10 operations per 4 seconds, 12 operations should finish in 5 seconds
-      Timeout.timeout(5) do
-        12.times do
-          limiter.add
-          limiter.exec_within_threshold do
-            count += 1
-          end
-        end
-      end
-    end
-
-    assert_equal 12, count
   end
 
   def test_bucket_index_returns_expected_index

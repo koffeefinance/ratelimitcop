@@ -1,0 +1,1 @@
+class InvalidBucketConfigError < StandardError; end

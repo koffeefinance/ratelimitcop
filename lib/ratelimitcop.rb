@@ -1,23 +1,25 @@
 require 'ratelimitcop/version'
 require 'redis'
 require 'redis-namespace'
+require_relative 'errors'
 
 class Ratelimitcop
-  attr_reader :name, :threshold, :interval, :time_span, :bucket_span
+  attr_reader :name, :threshold, :interval
 
-  def initialize(name:, threshold:, interval:, redis_connection: {}, time_span: 600, bucket_span: 5)
+  def initialize(name:, threshold:, interval:, redis: {}, options: {})
     @name = name
     @threshold = threshold
     @interval = interval
-    @time_span = time_span
-    @bucket_span = bucket_span
+    @bucket_interval = options[:bucket_interval] ||= 5
+    @bucket_time_span = options[:bucket_time_span] ||= 600
+    @bucket_span = options[:bucket_span] ||= @bucket_interval
 
-    raise ArgumentError if @interval > @time_span || @interval < @bucket_span
+    raise InvalidBucketConfigError if @bucket_interval > @bucket_time_span || @bucket_interval < @bucket_span
 
-    @redis ||= Redis::Namespace.new(:limiter, redis: Redis.new(redis_connection))
+    @redis ||= Redis::Namespace.new(:limiter, redis: Redis.new(redis))
 
-    @all_buckets_count = (@time_span / @bucket_span).floor
-    @sliding_window_buckets_count = (@interval.to_f / @bucket_span).floor
+    @all_buckets_count = (@bucket_time_span / @bucket_span).floor
+    @sliding_window_buckets_count = (@bucket_interval.to_f / @bucket_span).floor
   end
 
   def add(count: 1)
@@ -44,6 +46,13 @@ class Ratelimitcop
         @redis.get(key)
       end
     end.map(&:to_i).sum
+  end
+
+  def execute(&block)
+    add
+    exec_within_threshold do
+      block.call
+    end
   end
 
   def exec_within_threshold

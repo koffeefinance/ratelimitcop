@@ -24,9 +24,9 @@ Or install it yourself as:
 
 ### Basic Usage
 
-To rate limit calling a block of code, simply initialize `Ratelimitcop` with a `threshold` and `interval`, then pass the block of code into the `execute` method. `threshold` is the maximum number of requests that can be made within a timed `interval`, where `interval` is in seconds. `execute` will automatically block if the execution of your code block will exceed the given rate limit.
+To rate limit calling a block of code, simply initialize `Ratelimitcop` with a `threshold` and `interval`, then pass the block of code to the `execute` method. `threshold` is the maximum number of requests that can be made within a timed `interval`, where `interval` is in seconds. `execute` will automatically block if the execution of your code block will exceed the given rate limit.
 
-Note: You need let Ratelimitcop know how it can connect to your Redis instance (or else it will default to `localhost`, port 6379, as per the [Redis gem docs](https://www.rubydoc.info/gems/redis#getting-started)). To do this pass your Redis connection config as a parameter when intializing Ratelimitcop. View the [Redis gem docs](https://www.rubydoc.info/gems/redis#getting-started) to see the different ways you can connect Ratelimitcop to your Redis instance.
+Note: You need let Ratelimitcop know how it can connect to your Redis instance (or it will default to `localhost`, port 6379, as per the [Redis gem docs](https://www.rubydoc.info/gems/redis#getting-started)). To do this pass your Redis connection config as a parameter when intializing Ratelimitcop. View the [Redis gem docs](https://www.rubydoc.info/gems/redis#getting-started) to see the different ways you can connect Ratelimitcop to your Redis instance.
 
 Here is an example of an API client that uses Ratelimitcop to ensure the API's rate limits are not exceeded.
 
@@ -50,7 +50,7 @@ Here is an example of an API client that uses Ratelimitcop to ensure the API's r
     end
 
     def quote(ticker:)
-      # regardless of how this method is called it will block if rate limit is exceeded before trying to run the code block
+      # regardless of how this method is called it will block if the rate limit is exceeded before trying to run the code block
       @limiter.execute do
         res = @client.quote(URI.encode(ticker))
         res

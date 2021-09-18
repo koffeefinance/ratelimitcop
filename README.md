@@ -2,7 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/ratelimitcop.svg)](https://badge.fury.io/rb/ratelimitcop)
 
-Ratelimitcop is a redis backed rate limiter. Appropriate for use cases where in-memory rate limiting would not work (i.e rate limiting across multiple processes, servers, apps, etc).
+Ratelimitcop is a Redis backed rate limiter. Appropriate for use cases where in-memory rate limiting would not work (i.e rate limiting across multiple processes, servers, apps, etc).
 
 ## Installation
 
@@ -22,7 +22,42 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Basic Usage
+
+To rate limit calling a block of code, simply initialize `Ratelimitcop` with a `threshold` and `interval`, then pass the block of code into the `execute` method. `threshold` is the maximum number of requests that can be made within a timed `interval`, where `interval` is in seconds. `execute` will automatically block if the execution of your code block will exceed the given rate limit.
+
+Note: You need let Ratelimitcop know how it can connect to your Redis instance (or else it will default to `localhost`, port 6379, as per the [Redis gem docs](https://www.rubydoc.info/gems/redis#getting-started)). To do this pass your Redis connection config as a parameter when intializing Ratelimitcop. View the [Redis gem docs](https://www.rubydoc.info/gems/redis#getting-started) to see the different ways you can connect Ratelimitcop to your Redis instance.
+
+Here is an example of an API client that uses Ratelimitcop to ensure the API's rate limits are not exceeded.
+
+```ruby
+  require `iex-ruby-client`
+  require `ratelimitcop`
+
+  class IEXCloudAPIClient
+    def initialize
+      # rate limit 100 calls per second
+      @limiter = Ratelimitcop.new(
+        name: 'iex_cloud_api',
+        threshold: 100,
+        interval: 1,
+        redis: {
+          url: ENV['REDIS_URL']
+        }
+      )
+
+      @client = IEX::Api::Client.new
+    end
+
+    def quote(ticker:)
+      # regardless of how this method is called it will block if rate limit is exceeded before trying to run the code block
+      @limiter.execute do
+        res = @client.quote(URI.encode(ticker))
+        res
+      end
+    end
+  end
+```
 
 ## Development
 
